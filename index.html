@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lumora Cinema — Discover Your Next Movie</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+--bg:#08090d;
+--panel:#11141b;
+--panel2:#171b24;
+--text:#f7f5f0;
+--muted:#a2a7b2;
+--red:#ff5a36;
+--gold:#f6c56b;
+--line:rgba(255,255,255,.11);
+--green:#48d5a0
+}
+
+* {
+box-sizing:border-box
+}
+
+html {
+scroll-behavior:smooth;
+scroll-padding-top:90px
+}
+
+body {
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:'DM Sans',sans-serif
+}
+
+button,input,select {
+font:inherit
+}
+
+button {
+cursor:pointer;
+border:0
+}
+
+.wrap {
+max-width:1200px;
+margin:auto;
+padding:0 30px
+}
+
+header {
+height:78px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
+background:rgba(8,9,13,.9);
+backdrop-filter:blur(20px);
+z-index:20;
+padding:0 max(30px,calc((100vw - 1200px)/2))
+}
+
+.logo {
+font:700 27px 'Space Grotesk',sans-serif;
+letter-spacing:-1.5px
+}
+
+.logo:first-letter {
+color:var(--red)
+}
+
+.nav {
+display:flex;
+gap:30px
+}
+
+.nav a {
+color:#c6c9d1;
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+transition:.2s
+}
+
+.nav a:hover {
+color:var(--red)
+}
+
+.actions {
+display:flex;
+gap:10px
+}
+
+.btn {
+padding:13px 19px;
+border-radius:8px;
+font-weight:800;
+font-size:13px;
+background:var(--red);
+color:white;
+transition:.2s;
+box-shadow:0 8px 24px rgba(255,90,54,.18)
+}
+
+.btn:hover {
+transform:translateY(-2px);
+filter:brightness(1.1)
+}
+
+.btn.ghost {
+background:transparent;
+border:1px solid var(--line);
+color:white;
+box-shadow:none
+}
+
+.btn.gold {
+background:var(--gold);
+color:#20160a
+}
+
+.btn.small {
+padding:10px 14px
+}
+
+/* HERO SECTION */
+
+.hero {
+padding:32px 0 58px
+}
+
+.hero-card {
+min-height:440px;
+border-radius:18px;
+overflow:hidden;
+position:relative;
+display:flex;
+align-items:center;
+padding:clamp(28px,6vw,76px);
+background:linear-gradient(
+90deg,
+rgba(5,7,12,.96) 0%,
+rgba(5,7,12,.82) 42%,
+rgba(5,7,12,.22) 100%
+),
+linear-gradient(0deg,rgba(5,7,12,.3),transparent 60%),
+url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1900&q=88')
+center 43%/cover;
+border:1px solid rgba(255,255,255,.12);
+box-shadow:0 25px 80px rgba(0,0,0,.35)
+}
+
+.hero-card>div {
+max-width:560px;
+position:relative;
+z-index:1
+}
+
+.eyebrow {
+color:var(--red);
+font-size:11px;
+letter-spacing:2.2px;
+font-weight:800;
+text-transform:uppercase
+}
+
+.hero h1 {
+font:700 clamp(44px,6vw,76px)/.99 'Space Grotesk',sans-serif;
+letter-spacing:-3.5px;
+margin:18px 0
+}
+
+.hero p {
+color:#d1d2d5;
+font-size:16px;
+line-height:1.7;
+max-width:460px
+}
+
+.hero-meta {
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:25px 0
+}
+
+.hero-meta span {
+font-size:11px;
+font-weight:700;
+color:#f3eee8;
+border:1px solid rgba(255,255,255,.22);
+border-radius:30px;
+padding:8px 12px;
+background:rgba(255,255,255,.07)
+}
+
+/* MOVIE SECTION */
+
+.section {
+padding:24px 0 55px
+}
+
+.section-head {
+display:flex;
+justify-content:space-between;
+align-items:end;
+margin-bottom:23px
+}
+
+.section h2 {
+font:700 clamp(27px,3vw,36px) 'Space Grotesk',sans-serif;
+letter-spacing:-1.3px;
+margin:0 0 7px
+}
+
+.sub {
+color:var(--muted);
+font-size:13px
+}
+
+.section-head>.eyebrow {
+border:1px solid rgba(255,90,54,.3);
+border-radius:30px;
+padding:9px 13px;
+color:#ff795d;
+letter-spacing:1.2px
+}
+
+.movie-grid {
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:20px
+}
+
+.movie {
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:13px;
+overflow:hidden;
+transition:.25s
+}
+
+.movie:hover {
+transform:translateY(-5px);
+border-color:rgba(255,90,54,.55);
+box-shadow:0 18px 45px rgba(0,0,0,.28)
+}
+
+.poster {
+height:290px;
+position:relative;
+overflow:hidden;
+background:#1b1d25
+}
+
+.poster img {
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+transition:transform .5s
+}
+
+.movie:hover .poster img {
+transform:scale(1.04)
+}
+
+.movie-info {
+padding:17px
+}
+
+.movie-title {
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px
+}
+
+.movie h3 {
+font:700 20px 'Space Grotesk',sans-serif;
+margin:0
+}
+
+.movie-info p,
+.movie-info .details {
+color:var(--muted);
+font-size:12px;
+line-height:1.6
+}
+
+.movie-bottom {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:15px;
+color:#c9cbd2;
+font-size:12px
+}
+
+.movie-bottom .btn {
+padding:9px 12px;
+font-size:11px
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+Lumora
+<span style="font-size:9px;color:#777;vertical-align:top;margin-left:5px">
+CINEMA
+</span>
+</div>
+
+<nav class="nav">
+<a href="#home">Home</a>
+<a href="#movies">Films</a>
+<a href="#refreshment-info">Food &amp; drink</a>
+<a href="#upcoming">Coming soon</a>
+<a href="#" onclick="openBookings();return false">My bookings</a>
+</nav>
+
+<div class="actions">
+<button class="btn ghost small" id="accountBtn" onclick="openAuth()">
+Login / Register
+</button>
+</div>
+</header>
+
+<main class="wrap">
+
+<section class="hero" id="home">
+
+<div class="hero-card">
+
+<div>
+<div class="eyebrow">
+LUMORA · YOUR LOCAL CINEMA
+</div>
+
+<h1>
+Make room for<br>
+a good film.
+</h1>
+
+<p>
+Browse what's showing, pick your seats and settle in.
+Snacks are ready when you are.
+</p>
+
+<div class="hero-meta">
+<span>Easy booking</span>
+<span>Seats of your choice</span>
+<span>Quick confirmation</span>
+</div>
+
+<button class="btn"
+onclick="document.querySelector('#movies').scrollIntoView()">
+Explore movies →
+</button>
+
+</div>
+</div>
+</section>
+
+<section class="section" id="movies">
+
+<div class="section-head">
+<div>
+<h2>Now Showing</h2>
+<div class="sub">
+Choose from the films currently on our screens.
+</div>
+</div>
+
+<span class="eyebrow">On the big screen</span>
+</div>
+
+<div class="movie-grid">
